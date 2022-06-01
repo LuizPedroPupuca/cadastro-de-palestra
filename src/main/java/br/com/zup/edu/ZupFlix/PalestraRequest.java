@@ -75,9 +75,9 @@ public class PalestraRequest {
 
     public Palestra toModel(ZupperRepository zupperRepository) {
 
-        List<Zupper> zuppers = idZupper.stream().map(idZupper -> zupperRepository.
+        Set<Zupper> zuppers = idZupper.stream().map(idZupper -> zupperRepository.
                 findById(idZupper).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Zupper inexistente")))
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
         return new Palestra(titulo, tema, minutos, tipoExibicao, horaExibicao, zuppers);
     }
 }

@@ -31,9 +31,9 @@ public class Palestra {
     private LocalDate horaExibicao;
 
     @ManyToMany
-    private List<Zupper> zuppers = new ArrayList<>();
+    private Set<Zupper> zuppers = new HashSet<>();
 
-    public Palestra(String titulo, String tema, Integer minutos, Exibicao tipoExibicao, LocalDate horaExibicao, List<Zupper> zuppers) {
+    public Palestra(String titulo, String tema, Integer minutos, Exibicao tipoExibicao, LocalDate horaExibicao, Set<Zupper> zuppers) {
         this.titulo = titulo;
         this.tema = tema;
         this.minutos = minutos;

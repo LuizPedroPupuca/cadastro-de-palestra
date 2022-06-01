@@ -22,9 +22,6 @@ public class Zupper {
     @Column(nullable = false)
     private String email;
 
-    @ManyToMany(cascade = {CascadeType.MERGE})
-    private Set<Palestra> palestras = new HashSet<>();
-
     public Zupper(String nome, LocalDate dataAdmissao, String email) {
         this.nome = nome;
         this.dataAdmissao = dataAdmissao;
@@ -39,7 +36,4 @@ public class Zupper {
         return id;
     }
 
-    public void adiciona(Palestra palestra) {
-        this.palestras.add(palestra);
-    }
 }

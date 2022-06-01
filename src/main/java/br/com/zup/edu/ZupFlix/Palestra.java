@@ -2,6 +2,11 @@ package br.com.zup.edu.ZupFlix;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Palestra {
@@ -25,12 +30,16 @@ public class Palestra {
     @Column(nullable = false)
     private LocalDate horaExibicao;
 
-    public Palestra(String titulo, String tema, Integer minutos, Exibicao tipoExibicao, LocalDate horaExibicao) {
+    @ManyToMany
+    private List<Zupper> zuppers = new ArrayList<>();
+
+    public Palestra(String titulo, String tema, Integer minutos, Exibicao tipoExibicao, LocalDate horaExibicao, List<Zupper> zuppers) {
         this.titulo = titulo;
         this.tema = tema;
         this.minutos = minutos;
         this.tipoExibicao = tipoExibicao;
         this.horaExibicao = horaExibicao;
+        this.zuppers = zuppers;
     }
 
     @Deprecated

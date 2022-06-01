@@ -1,14 +1,17 @@
 package br.com.zup.edu.ZupFlix;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.Column;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.persistence.SecondaryTable;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PalestraRequest {
 
@@ -25,17 +28,21 @@ public class PalestraRequest {
     @NotNull
     private Exibicao tipoExibicao;
 
+    @Size(min = 1)
+    private Set<Long> idZupper;
+
 
     @Future
     @NotNull
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate horaExibicao;
 
-    public PalestraRequest(String titulo, String tema, Integer minutos, Exibicao tipoExibicao, LocalDate horaExibicao) {
+    public PalestraRequest(String titulo, String tema, Integer minutos, Exibicao tipoExibicao, Set<Long> idZupper, LocalDate horaExibicao) {
         this.titulo = titulo;
         this.tema = tema;
         this.minutos = minutos;
         this.tipoExibicao = tipoExibicao;
+        this.idZupper = idZupper;
         this.horaExibicao = horaExibicao;
     }
 
@@ -62,7 +69,15 @@ public class PalestraRequest {
         return horaExibicao;
     }
 
-    public Palestra toModel() {
-        return new Palestra(titulo, tema, minutos, tipoExibicao, horaExibicao);
+    public Set<Long> getIdZupper() {
+        return idZupper;
+    }
+
+    public Palestra toModel(ZupperRepository zupperRepository) {
+
+        List<Zupper> zuppers = idZupper.stream().map(idZupper -> zupperRepository.
+                findById(idZupper).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Zupper inexistente")))
+                .collect(Collectors.toList());
+        return new Palestra(titulo, tema, minutos, tipoExibicao, horaExibicao, zuppers);
     }
 }

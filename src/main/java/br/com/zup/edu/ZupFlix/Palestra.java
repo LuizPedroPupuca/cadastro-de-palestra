@@ -28,12 +28,12 @@ public class Palestra {
     private Exibicao tipoExibicao;
 
     @Column(nullable = false)
-    private LocalDate horaExibicao;
+    private LocalDateTime horaExibicao;
 
     @ManyToMany
     private Set<Zupper> zuppers = new HashSet<>();
 
-    public Palestra(String titulo, String tema, Integer minutos, Exibicao tipoExibicao, LocalDate horaExibicao, Set<Zupper> zuppers) {
+    public Palestra(String titulo, String tema, Integer minutos, Exibicao tipoExibicao, LocalDateTime horaExibicao, Set<Zupper> zuppers) {
         this.titulo = titulo;
         this.tema = tema;
         this.minutos = minutos;

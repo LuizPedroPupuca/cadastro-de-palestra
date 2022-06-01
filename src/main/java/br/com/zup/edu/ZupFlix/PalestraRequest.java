@@ -28,16 +28,17 @@ public class PalestraRequest {
     @NotNull
     private Exibicao tipoExibicao;
 
+    @NotEmpty
     @Size(min = 1)
     private Set<Long> idZupper;
 
 
     @Future
     @NotNull
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate horaExibicao;
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+    private LocalDateTime horaExibicao;
 
-    public PalestraRequest(String titulo, String tema, Integer minutos, Exibicao tipoExibicao, Set<Long> idZupper, LocalDate horaExibicao) {
+    public PalestraRequest(String titulo, String tema, Integer minutos, Exibicao tipoExibicao, Set<Long> idZupper, LocalDateTime horaExibicao) {
         this.titulo = titulo;
         this.tema = tema;
         this.minutos = minutos;
@@ -65,7 +66,7 @@ public class PalestraRequest {
         return tipoExibicao;
     }
 
-    public LocalDate getHoraExibicao() {
+    public LocalDateTime getHoraExibicao() {
         return horaExibicao;
     }
 
